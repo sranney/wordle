@@ -26,8 +26,8 @@ export default function PreviousGuesses({previousGuessArray}) {
 
 PreviousGuesses.propTypes = {
   previousGuessArray: PropTypes.arrayOf(PropTypes.arrayOf({
-    id: string,
-    value: string,
-    accuracy: number
+    id: PropTypes.string,
+    value: PropTypes.string,
+    accuracy: PropTypes.number
   })).isRequired
 }

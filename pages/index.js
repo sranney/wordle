@@ -2,6 +2,7 @@ import { useEffect, useReducer } from 'react'
 import SetOfFutureGuesses from '../components/SetOfFutureGuesses'
 import { v4 as uuid } from 'uuid'
 import PreviousGuesses from '../components/PreviousGuesses'
+import CurrentGuess from '../components/CurrentGuess'
 
 const USER_UPDATED_CURRENT_GUESS = 'User Updated Current Guess'
 const USER_SUBMITTED_NEW_APPROVED_GUESS = 'User Successfully Submitted New Guess'
@@ -31,11 +32,19 @@ export default function Home() {
 
   useEffect(() => {
     window.addEventListener('keydown', ({key}) => {
-      if(key.match(/^[A-Za-z]+$/)) {
+      if(key.match(/^[A-Za-z]$/)) {
         console.log('is alpha - ', key)
+      } else if (key === 'Enter') {
+        console.log('user pressed enter')
+      } else if (key === 'Backspace') {
+        console.log('user has pressed backspace')
       }
     })
   }, [USER_UPDATED_CURRENT_GUESS, USER_SUBMITTED_NEW_APPROVED_GUESS])
+  
+  useEffect(() => {
+
+  }, [])
 
   return <div>
     <PreviousGuesses previousGuessArray={previousGuessArray}/>
