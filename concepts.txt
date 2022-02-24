@@ -1,0 +1,30 @@
+stack guessed words after successful submission
+after each successful guess submission comes the current guess row
+after that guess row comes 6 - 1 current guess row - n guessed word rows = number of rows that represent future guesses
+
+guessed word rows are static
+future guess rows are static
+only thing that updates is current guess row
+a key down event listener is attached to this row and only alphabetic characters are captured
+guesses can only be 5 letters long - after the fifth letter entered, user's key presses are not captured in guess unless user presses backspace
+when user presses enter this submits a guess
+if guess submission is successful, guessed words stack has another guess pushed onto it and current guess row is reset
+if guess submission is not successful, user is notified guess was not successful and current guess row is not reset
+
+guess submission is not successful when user tries to submit a word:
+1. without enough letters, or
+2. not in word bank
+submissions are still allowed in these cases
+
+guess submission is successful, check which letters are in actual selected word
+if a letter is in the word and in the correct space, return 2
+if a letter is in the word and not in the correct space, return 1
+if a letter is not in the word, return 0
+return an array of these numbers in the associated position of each respective letter
+server also returns a property which states whether user has won game
+
+a successful guess wins the game
+successful guess is determined server side by summing total of guess array. does it equal 10?
+when successful guess notification is received in returned data, user can no longer interact with game board
+
+after 6 attempts with 0 successful guesses, player loses game

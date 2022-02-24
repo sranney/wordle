@@ -1,0 +1,18 @@
+.letter {
+  font-size: 32px;
+  margin-left: 16px;
+  height: 40px;
+  width: 40px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
+.neutral {
+  background-color: #444;
+}
+.correct {
+  background-color: #063;
+}
+.in-word {
+  background-color: darkgoldenrod;
+}
