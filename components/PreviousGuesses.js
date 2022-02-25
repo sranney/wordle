@@ -8,26 +8,26 @@ export default function PreviousGuesses({previousGuessArray}) {
   return (
     <>
       {
-        previousGuessArray.map(guess => {
+        previousGuessArray.map(guess => (
           <div className={containerStyles.row}>
             {guess.map(letter => (
               <Letter 
                 key={letter.id} 
-                letter={letter.value} 
+                letterValue={letter.value} 
                 state={accuracyArray[letter.accuracy]}
               />)
             )}
           </div>
-        })
+        ))
       }
     </>
   )
 }
 
 PreviousGuesses.propTypes = {
-  previousGuessArray: PropTypes.arrayOf(PropTypes.arrayOf({
+  previousGuessArray: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     value: PropTypes.string,
     accuracy: PropTypes.number
-  })).isRequired
+  }))).isRequired
 }

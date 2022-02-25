@@ -7,16 +7,16 @@ import CurrentGuess from '../components/CurrentGuess'
 const USER_UPDATED_CURRENT_GUESS = 'User Updated Current Guess'
 const USER_SUBMITTED_NEW_APPROVED_GUESS = 'User Successfully Submitted New Guess'
 
-const guessReducer = ({previousGuesses, countOfFutureGuesses}, {type, payload}) => {
+const guessReducer = ({previousGuessArray, countOfFutureGuesses, currentGuess}, {type, payload}) => {
   if(type === USER_UPDATED_CURRENT_GUESS) {
     return {
-      previousGuesses,
+      previousGuessArray,
       countOfFutureGuesses,
       currentGuess: payload
     }
   } else if(type === USER_SUBMITTED_NEW_APPROVED_GUESS) {
     return {
-      previousGuesses: [...previousGuesses, payload],
+      previousGuessArray: [...previousGuesses, payload],
       countOfFutureGuesses: 6 - (previousGuesses.length + 1) - 1,
       currentGuess: Array.from(new Array(5), () => ({id: uuid(), value: ''}))
     }
@@ -25,26 +25,33 @@ const guessReducer = ({previousGuesses, countOfFutureGuesses}, {type, payload}) 
 
 export default function Home() {
   const [{previousGuessArray, countOfFutureGuesses, currentGuess }, dispatch] = useReducer(guessReducer, {
-    previousGuessArray: [[{id: 'abc-123', value: 'a', accuracy: 1}, {id: 'bcd-234', value: 'a', accuracy: 0}, {id: 'cde-345', value: 'a', accuracy: 0}, {id: 'def-456', value: 'a', accuracy: 0}, {id: 'efg-567', value: 'a', accuracy: 0}, {id: 'fgh-678', value: 'a', accuracy: 0}]],
+    previousGuessArray: [
+      [
+        {id: 'abc-123', value: 'A', accuracy: 1},
+        {id: 'bcd-234', value: 'B', accuracy: 0},
+        {id: 'cde-345', value: 'C', accuracy: 2},
+        {id: 'def-456', value: 'D', accuracy: 0},
+        {id: 'efg-567', value: 'E', accuracy: 0}
+      ]
+    ],
     countOfFutureGuesses: 5,
     currentGuess: ''
   })
 
-  useEffect(() => {
-    window.addEventListener('keydown', ({key}) => {
-      if(key.match(/^[A-Za-z]$/)) {
-        console.log('is alpha - ', key)
-      } else if (key === 'Enter') {
-        console.log('user pressed enter')
-      } else if (key === 'Backspace') {
-        console.log('user has pressed backspace')
-      }
-    })
-  }, [USER_UPDATED_CURRENT_GUESS, USER_SUBMITTED_NEW_APPROVED_GUESS])
-  
-  useEffect(() => {
+  const keyDownHandler = ({key}) => {
+    if(key.match(/^[A-Za-z]$/) && currentGuess.length < 5) {
+      dispatch({type: USER_UPDATED_CURRENT_GUESS, payload: `${currentGuess}${key.toUpperCase()}`})
+    } else if (key === 'Enter') {
+      console.log('user pressed enter')
+    } else if (key === 'Backspace') {
+      dispatch({type: USER_UPDATED_CURRENT_GUESS, payload: currentGuess.slice(0,-1)})
+    }
+  }
 
-  }, [])
+  useEffect(() => {
+    window.addEventListener('keydown', keyDownHandler)
+    return () => window.removeEventListener('keydown', keyDownHandler)
+  }, [currentGuess])
 
   return <div>
     <PreviousGuesses previousGuessArray={previousGuessArray}/>
