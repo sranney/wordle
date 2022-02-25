@@ -26,29 +26,31 @@ const guessReducer = ({previousGuessArray, countOfFutureGuesses, currentGuess}, 
 export default function Home() {
   const [{previousGuessArray, countOfFutureGuesses, currentGuess }, dispatch] = useReducer(guessReducer, {
     previousGuessArray: [
-      [
-        {id: 'abc-123', value: 'A', accuracy: 1},
-        {id: 'bcd-234', value: 'B', accuracy: 0},
-        {id: 'cde-345', value: 'C', accuracy: 2},
-        {id: 'def-456', value: 'D', accuracy: 0},
-        {id: 'efg-567', value: 'E', accuracy: 0}
-      ]
+      {
+        id: 'guess-123',
+        guess: [
+          {id: 'abc-123', value: 'A', accuracy: 1},
+          {id: 'bcd-234', value: 'B', accuracy: 0},
+          {id: 'cde-345', value: 'C', accuracy: 2},
+          {id: 'def-456', value: 'D', accuracy: 0},
+          {id: 'efg-567', value: 'E', accuracy: 0}
+        ]
+      }
     ],
     countOfFutureGuesses: 5,
     currentGuess: ''
   })
 
-  const keyDownHandler = ({key}) => {
-    if(key.match(/^[A-Za-z]$/) && currentGuess.length < 5) {
-      dispatch({type: USER_UPDATED_CURRENT_GUESS, payload: `${currentGuess}${key.toUpperCase()}`})
-    } else if (key === 'Enter') {
-      console.log('user pressed enter')
-    } else if (key === 'Backspace') {
-      dispatch({type: USER_UPDATED_CURRENT_GUESS, payload: currentGuess.slice(0,-1)})
-    }
-  }
-
   useEffect(() => {
+    const keyDownHandler = ({key}) => {
+      if(key.match(/^[A-Za-z]$/) && currentGuess.length < 5) {
+        dispatch({type: USER_UPDATED_CURRENT_GUESS, payload: `${currentGuess}${key.toUpperCase()}`})
+      } else if (key === 'Enter') {
+        console.log('user pressed enter')
+      } else if (key === 'Backspace') {
+        dispatch({type: USER_UPDATED_CURRENT_GUESS, payload: currentGuess.slice(0,-1)})
+      }
+    }
     window.addEventListener('keydown', keyDownHandler)
     return () => window.removeEventListener('keydown', keyDownHandler)
   }, [currentGuess])

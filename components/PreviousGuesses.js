@@ -9,8 +9,8 @@ export default function PreviousGuesses({previousGuessArray}) {
     <>
       {
         previousGuessArray.map(guess => (
-          <div className={containerStyles.row}>
-            {guess.map(letter => (
+          <div key={guess.id} className={containerStyles.row}>
+            {guess.guess.map(letter => (
               <Letter 
                 key={letter.id} 
                 letterValue={letter.value} 

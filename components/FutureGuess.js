@@ -1,4 +1,4 @@
-import Letter from './letter'
+import Letter from './Letter'
 import { v4 as uuid } from 'uuid'
 import styles from './styles/row.module.css'
 
