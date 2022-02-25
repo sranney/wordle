@@ -47,6 +47,11 @@ export default function Home() {
         dispatch({type: USER_UPDATED_CURRENT_GUESS, payload: `${currentGuess}${key.toUpperCase()}`})
       } else if (key === 'Enter') {
         console.log('user pressed enter')
+        fetch('/api/submit-guess', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({guess: 'tests'})
+        })
       } else if (key === 'Backspace') {
         dispatch({type: USER_UPDATED_CURRENT_GUESS, payload: currentGuess.slice(0,-1)})
       }
