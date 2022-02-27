@@ -10,11 +10,11 @@ export default function PreviousGuesses({previousGuessArray}) {
       {
         previousGuessArray.map(guess => (
           <div key={guess.id} className={containerStyles.row}>
-            {guess.guess.map(letter => (
+            {guess.result.map(letterData => (
               <Letter 
-                key={letter.id} 
-                letterValue={letter.value} 
-                state={accuracyArray[letter.accuracy]}
+                key={letterData.id} 
+                letterValue={letterData.value} 
+                state={accuracyArray[letterData.accuracy]}
               />)
             )}
           </div>

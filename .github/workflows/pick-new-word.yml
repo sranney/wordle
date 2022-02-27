@@ -13,7 +13,7 @@ jobs:
   cron:
     runs-on: ubuntu-latest
     steps:
-      - name: Call New Word Route
+    - name: Call New Word Route
       run: |
         curl --request POST \
         --url 'https://wordle-jq0jkle2z-spencerranney.vercel.app/api/pick-new-word'

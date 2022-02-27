@@ -1,5 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
 import { NextApiRequest, NextApiResponse } from 'next'
 import submitGuess from '../../backend-operations/submit-guess'
 
@@ -14,8 +12,7 @@ export default async function handler(
 ) {
   if (req.method === 'POST') {
     try {
-      submitGuess(req.body.guess)
-      res.status(200).json({ success: true })
+      res.status(200).json({ success: true, result: submitGuess(req.body.guess)})
     } catch (err) {
       res.status(500).json({ statusCode: 500, message: err.message })
     }
